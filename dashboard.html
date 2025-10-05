@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - StudyFlow</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+    <a href="index.html" class="logo">StudyFlow</a>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="progress.html">Progress</a></li>
+        <li><a href="calendar.html">Calendar</a></li> <li><a href="settings.html">Settings</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+</nav>
+    </header>
+
+    <main class="dashboard-container">
+    
+        <h2>My Study Dashboard</h2>
+
+        <div class="timer-container">
+            <h3 id="timer-display">25:00</h3>
+            
+            <div class="timer-settings">
+                <div class="setting">
+                    <span>Session</span>
+                    <button id="session-decrement">-</button>
+                    <span id="session-length">25</span>
+                    <button id="session-increment">+</button>
+                </div>
+                <div class="setting">
+                    <span>Break</span>
+                    <button id="break-decrement">-</button>
+                    <span id="break-length">5</span>
+                    <button id="break-increment">+</button>
+                </div>
+            </div>
+
+            <div class="timer-controls">
+                <button id="start-btn">Start</button>
+                <button id="pause-btn">Pause</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+        </div>
+        
+        <form id="task-form">
+            <input type="text" id="task-title" placeholder="Enter task title..." required>
+            <input type="date" id="task-due-date" required>
+            <select id="task-subject">
+                <option value="General">General</option>
+                <option value="Math">Math</option>
+                <option value="Science">Science</option>
+                <option value="History">History</option>
+                <option value="Programming">Programming</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <h3>Your Tasks</h3>
+        <div id="task-list">
+            </div>
+
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 StudyFlow. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
