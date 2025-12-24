@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('mobile-menu');
     const navList = document.getElementById('nav-list');
 
-    if (menuToggle) {
+    if (menuToggle && navList) {
         menuToggle.addEventListener('click', () => {
             navList.classList.toggle('show');
         });
@@ -255,10 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        });
+        if (themeToggle) {
+            themeToggle.addEventListener('change', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+        }
     }
 
     if (document.body.contains(document.querySelector('.calendar-grid'))) {
@@ -267,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const monthYearDisplay = document.getElementById('month-year-display');
         const calendarGrid = document.querySelector('.calendar-grid');
         let currentDate = new Date();
+
         const renderCalendar = () => {
             calendarGrid.innerHTML = '';
             const year = currentDate.getFullYear();
@@ -286,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 calendarGrid.insertAdjacentHTML('beforeend', `<div class="day ${isStudyDay} ${isEventDay}" data-date="${dayDate}" ${titleAttr}>${i}</div>`);
             }
         };
+
         calendarGrid.addEventListener('click', (e) => {
             if (e.target.classList.contains('day') && !e.target.classList.contains('other-month')) {
                 const date = e.target.dataset.date;
@@ -299,14 +303,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+
         document.getElementById('prev-month-btn').addEventListener('click', () => {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
         });
+
         document.getElementById('next-month-btn').addEventListener('click', () => {
             currentDate.setMonth(currentDate.getMonth() + 1);
             renderCalendar();
         });
+
+        // --- TODAY BUTTON LOGIC ---
+        const todayBtn = document.getElementById('today-btn');
+        if (todayBtn) {
+            todayBtn.addEventListener('click', () => {
+                currentDate = new Date();
+                renderCalendar();
+            });
+        }
+
         renderCalendar();
     }
 });
