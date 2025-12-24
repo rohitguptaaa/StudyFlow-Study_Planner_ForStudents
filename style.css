@@ -169,7 +169,6 @@ main {
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
 
-/* FIX: Interactive Push and Glow Effect for Buttons */
 #start-btn:active, 
 #task-form button:active, 
 .complete-btn:active,
@@ -281,13 +280,19 @@ main {
     cursor: pointer;
 }
 
-/* FIX: Centered Calendar Header */
+/* MODIFIED SECTION FOR FIXED ARROWS */
 .calendar-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px; /* Controls space between buttons and text */
     margin-bottom: 20px;
+}
+
+.calendar-header h3 {
+    min-width: 200px; /* FIXED WIDTH: Prevents arrows from moving */
+    text-align: center;
+    margin: 0;
 }
 
 .calendar-header button {
@@ -297,6 +302,7 @@ main {
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
+    flex-shrink: 0; /* Prevents buttons from squishing */
 }
 
 .calendar-grid {
@@ -479,7 +485,7 @@ footer {
 @media (max-width: 665px) {
     .home-container, .dashboard-container {
         width: 95%;
-        margin: 10px auto;
+        margin: 20px auto;
         padding: 15px;
     }
 }
