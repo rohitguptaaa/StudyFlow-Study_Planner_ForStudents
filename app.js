@@ -38,19 +38,17 @@ function initializeTimer() {
 
 function handleTimerCompletion(timerState) {
     const data = getStudyData();
+    const now = new Date();
+    // India Schedule Fix: YYYY-MM-DD local
+    const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+
     if (timerState.isSession) {
         data.stats.totalMinutes += timerState.sessionLength;
-        
-        // India Schedule Fix for Streak tracking
-        const now = new Date();
-        const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-        
         const lastSession = data.stats.lastSessionDate;
         if (lastSession !== today) {
             const yesterdayDate = new Date();
             yesterdayDate.setDate(now.getDate() - 1);
             const yesterday = yesterdayDate.getFullYear() + '-' + String(yesterdayDate.getMonth() + 1).padStart(2, '0') + '-' + String(yesterdayDate.getDate()).padStart(2, '0');
-            
             data.stats.streak = (lastSession === yesterday) ? data.stats.streak + 1 : 1;
             data.stats.lastSessionDate = today;
         }
@@ -86,7 +84,7 @@ initializeTimer();
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ADDED: Mobile Menu toggle logic
+    // FIX: Mobile Menu toggle logic
     const menuToggle = document.getElementById('mobile-menu');
     const navList = document.querySelector('nav ul');
     if (menuToggle && navList) {
@@ -102,10 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
             link.classList.add('active-link');
         }
     });
-    
-    // YOUR ORIGINAL DASHBOARD PAGE LOGIC
+
+    // --- DASHBOARD PAGE LOGIC ---
     if (document.body.contains(document.getElementById('task-form'))) {
-    
         const taskForm = document.getElementById('task-form');
         const taskTitleInput = document.getElementById('task-title');
         const taskDueDateInput = document.getElementById('task-due-date');
@@ -124,6 +121,22 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let data = getStudyData();
 
+        // FIX: "Add more..." Category Logic
+        taskSubjectInput.addEventListener('change', function() {
+            if (this.value === 'add-more') {
+                const newCategory = prompt("Enter new category name:");
+                if (newCategory && newCategory.trim() !== "") {
+                    const option = document.createElement('option');
+                    option.value = newCategory.toLowerCase().replace(/\s+/g, '-');
+                    option.text = newCategory;
+                    this.add(option, this.options[this.length - 1]);
+                    this.value = option.value;
+                } else {
+                    this.value = 'general';
+                }
+            }
+        });
+
         const renderTasks = () => {
             taskList.innerHTML = '';
             if (data.tasks.length === 0) {
@@ -137,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 taskList.appendChild(taskItem);
             });
         };
+
         taskForm.addEventListener('submit', (e) => {
             e.preventDefault();
             data.tasks.push({ title: taskTitleInput.value, dueDate: taskDueDateInput.value, subject: taskSubjectInput.value, completed: false });
@@ -144,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTasks();
             taskForm.reset();
         });
+
         taskList.addEventListener('click', (e) => {
             const index = e.target.getAttribute('data-index');
             if (e.target.classList.contains('complete-btn')) data.tasks[index].completed = !data.tasks[index].completed;
@@ -237,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initialTimerSetup();
     }
 
-    // YOUR ORIGINAL PROGRESS LOGIC
+    // --- PROGRESS LOGIC ---
     if (document.body.contains(document.getElementById('total-hours'))) {
         const data = getStudyData();
         const totalHours = (data.stats.totalMinutes / 60).toFixed(1);
@@ -254,13 +269,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // YOUR ORIGINAL SETTINGS LOGIC
+    // --- SETTINGS LOGIC ---
     if (document.body.contains(document.getElementById('clear-data-btn'))) {
         document.getElementById('clear-data-btn').addEventListener('click', () => {
-            if (confirm('Are you sure you want to delete all your data? This cannot be undone.')) {
-                localStorage.removeItem('studyFlowData');
-                localStorage.removeItem('timerState');
-                alert('All data has been cleared.');
+            if (confirm('Are you sure you want to delete all your data?')) {
+                localStorage.clear();
                 location.reload();
             }
         });
@@ -271,10 +284,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- UPDATED CALENDAR LOGIC WITH FIXES ---
+    // --- CALENDAR LOGIC WITH FIXES ---
     if (document.body.contains(document.querySelector('.calendar-grid'))) {
         let data = getStudyData();
-        // Updated to use the local study sessions correctly
         const studyDays = new Set(data.studySessions.map(session => session.date));
         const monthYearDisplay = document.getElementById('month-year-display');
         const calendarGrid = document.querySelector('.calendar-grid');
@@ -286,11 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const month = currentDate.getMonth();
             monthYearDisplay.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
             
-            // INDIA SCHEDULE FIX: Get local YYYY-MM-DD
+            // India Schedule Fix: Local Date String
             const now = new Date();
-            const todayStr = now.getFullYear() + '-' + 
-                             String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                             String(now.getDate()).padStart(2, '0');
+            const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
             const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             dayNames.forEach(day => calendarGrid.insertAdjacentHTML('beforeend', `<div class="day-name">${day}</div>`));
@@ -300,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             
-            // Update day-rendering loop to use todayStr and persistent study highlights
             for (let i = 1; i <= daysInMonth; i++) {
                 const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(i).padStart(2, '0');
                 const isStudyDay = studyDays.has(dateStr) ? 'study-day' : '';
@@ -312,15 +321,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 calendarGrid.insertAdjacentHTML('beforeend', `<div class="day ${isStudyDay} ${isEventDay} ${isToday}" data-date="${dateStr}" ${titleAttr}>${i}</div>`);
             }
 
-            // CALENDAR SIZE FIX: Add empty slots until you reach 42 total slots
-            const totalSlots = 42; 
+            // CALENDAR SIZE FIX: Maintain 42 slots
             const currentSlotsUsed = firstDayOfMonth + daysInMonth;
-            for (let i = currentSlotsUsed; i < totalSlots; i++) {
+            for (let i = currentSlotsUsed; i < 42; i++) {
                 calendarGrid.insertAdjacentHTML('beforeend', '<div class="day other-month"></div>');
             }
         };
 
-        // Today Button Listener
         const todayBtn = document.getElementById('today-btn');
         if (todayBtn) {
             todayBtn.addEventListener('click', () => {
