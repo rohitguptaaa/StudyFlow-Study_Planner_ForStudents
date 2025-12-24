@@ -175,7 +175,7 @@ main {
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
 
-
+/* Interactive Push and Glow Effect for Buttons */
 #start-btn:active, 
 #task-form button:active, 
 .complete-btn:active,
@@ -259,7 +259,7 @@ main {
 .timer-settings {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Reduced gap for mobile */
+    gap: 15px; 
     margin: 15px 0;
     color: var(--text-color);
 }
@@ -287,20 +287,17 @@ main {
     cursor: pointer;
 }
 
-
+/* REVERTED: CALENDAR HEADER (FLUID POSITION) */
 .calendar-header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Restored original spacing */
     align-items: center;
     margin-bottom: 20px;
-    width: 100%;
 }
 
 .calendar-header h3 {
-    width: 160px; 
     text-align: center;
     margin: 0;
-    flex: 0 0 160px; 
     font-size: 1.1em;
 }
 
@@ -308,27 +305,20 @@ main {
     background: #3498db;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
-    flex: 0 0 auto;
 }
 
-#today-btn {
-    margin-left: 10px;
-}
-
-/* FIX: CALENDAR GRID SCALING FOR MOBILE */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto repeat(6, 1fr); 
     gap: 5px;
     background-color: var(--card-color);
-    padding: 10px;
+    padding: 15px;
     border-radius: 8px;
-    width: 100%;
-    box-sizing: border-box;
+    min-height: 400px;
 }
 
 .day-name, .day {
@@ -338,16 +328,11 @@ main {
 
 .day-name {
     font-weight: bold;
-    font-size: 0.8em; /* Slightly smaller for mobile */
 }
 
 .day {
     border-radius: 5px;
     cursor: pointer;
-    aspect-ratio: 1/1; /* Keeps circles perfect on mobile */
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .day.other-month {
@@ -493,7 +478,7 @@ footer {
     }
 
     .timer-settings {
-        flex-wrap: wrap; /* Prevents timer buttons from going off-screen */
+        flex-wrap: wrap; 
         gap: 10px;
     }
 
