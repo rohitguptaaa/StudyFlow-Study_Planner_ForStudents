@@ -40,14 +40,21 @@ function handleTimerCompletion(timerState) {
     const data = getStudyData();
     if (timerState.isSession) {
         data.stats.totalMinutes += timerState.sessionLength;
-        const today = new Date().toISOString().split('T')[0];
+        
+        // India Schedule Fix for Streak tracking
+        const now = new Date();
+        const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+        
         const lastSession = data.stats.lastSessionDate;
         if (lastSession !== today) {
-            const yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
+            const yesterdayDate = new Date();
+            yesterdayDate.setDate(now.getDate() - 1);
+            const yesterday = yesterdayDate.getFullYear() + '-' + String(yesterdayDate.getMonth() + 1).padStart(2, '0') + '-' + String(yesterdayDate.getDate()).padStart(2, '0');
+            
             data.stats.streak = (lastSession === yesterday) ? data.stats.streak + 1 : 1;
             data.stats.lastSessionDate = today;
         }
-        data.studySessions.push({ date: new Date().toISOString(), duration: timerState.sessionLength });
+        data.studySessions.push({ date: today, duration: timerState.sessionLength });
         saveStudyData(data);
     }
     const isNowSession = !timerState.isSession;
@@ -264,37 +271,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CALENDAR LOGIC WITH TODAY CIRCLE & TODAY BUTTON ---
+    // --- UPDATED CALENDAR LOGIC WITH FIXES ---
     if (document.body.contains(document.querySelector('.calendar-grid'))) {
         let data = getStudyData();
-        const studyDays = new Set(data.studySessions.map(session => session.date.split('T')[0]));
+        // Updated to use the local study sessions correctly
+        const studyDays = new Set(data.studySessions.map(session => session.date));
         const monthYearDisplay = document.getElementById('month-year-display');
         const calendarGrid = document.querySelector('.calendar-grid');
         let currentDate = new Date();
-        const todayStr = new Date().toISOString().split('T')[0]; // Format current system date
 
         const renderCalendar = () => {
             calendarGrid.innerHTML = '';
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
             monthYearDisplay.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
+            
+            // INDIA SCHEDULE FIX: Get local YYYY-MM-DD
+            const now = new Date();
+            const todayStr = now.getFullYear() + '-' + 
+                             String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                             String(now.getDate()).padStart(2, '0');
+
             const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             dayNames.forEach(day => calendarGrid.insertAdjacentHTML('beforeend', `<div class="day-name">${day}</div>`));
+            
             const firstDayOfMonth = new Date(year, month, 1).getDay();
             for (let i = 0; i < firstDayOfMonth; i++) calendarGrid.insertAdjacentHTML('beforeend', '<div class="day other-month"></div>');
+            
             const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Update day-rendering loop to use todayStr and persistent study highlights
             for (let i = 1; i <= daysInMonth; i++) {
-                const dayDate = new Date(year, month, i).toISOString().split('T')[0];
-                const isStudyDay = studyDays.has(dayDate) ? 'study-day' : '';
-                const isToday = (dayDate === todayStr) ? 'today' : ''; // IDENTIFY TODAY
-                const eventText = data.calendarEvents[dayDate];
+                const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(i).padStart(2, '0');
+                const isStudyDay = studyDays.has(dateStr) ? 'study-day' : '';
+                const isToday = (dateStr === todayStr) ? 'today' : '';
+                const eventText = data.calendarEvents[dateStr];
                 const isEventDay = eventText ? 'event-day' : '';
                 const titleAttr = eventText ? `title="${eventText}"` : '';
-                calendarGrid.insertAdjacentHTML('beforeend', `<div class="day ${isStudyDay} ${isEventDay} ${isToday}" data-date="${dayDate}" ${titleAttr}>${i}</div>`);
+                
+                calendarGrid.insertAdjacentHTML('beforeend', `<div class="day ${isStudyDay} ${isEventDay} ${isToday}" data-date="${dateStr}" ${titleAttr}>${i}</div>`);
+            }
+
+            // CALENDAR SIZE FIX: Add empty slots until you reach 42 total slots
+            const totalSlots = 42; 
+            const currentSlotsUsed = firstDayOfMonth + daysInMonth;
+            for (let i = currentSlotsUsed; i < totalSlots; i++) {
+                calendarGrid.insertAdjacentHTML('beforeend', '<div class="day other-month"></div>');
             }
         };
 
-        // ADDED: Today Button Listener
+        // Today Button Listener
         const todayBtn = document.getElementById('today-btn');
         if (todayBtn) {
             todayBtn.addEventListener('click', () => {
@@ -316,6 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+        
         document.getElementById('prev-month-btn').addEventListener('click', () => {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
