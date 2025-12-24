@@ -57,18 +57,17 @@
         
         <form id="task-form">
     <input type="text" id="task-title" placeholder="Enter task title..." required>
-    <input type="date" id="task-due-date" required>
     
     <select id="task-subject" required>
         <option value="general">General</option>
         <option value="programming">Programming</option>
         <option value="math">Mathematics</option>
-        <option value="add-more">--- Add more... ---</option>
+        <option value="add-more">Add more...</option>
     </select>
     
-    <button type="submit">Add Task</button>
+    <button type="submit" id="add-task-btn">Add Task</button>
 </form>
-
+        
         <h3>Your Tasks</h3>
         <div id="task-list">
         
@@ -83,5 +82,6 @@
     <script src="app.js"></script>
 </body>
 </html>
+
 
 
