@@ -38,8 +38,9 @@ function initializeTimer() {
 
 function handleTimerCompletion(timerState) {
     const data = getStudyData();
+    
+    // India Schedule Fix: Local Date String
     const now = new Date();
-    // India Schedule Fix: YYYY-MM-DD local
     const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
     if (timerState.isSession) {
@@ -100,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.classList.add('active-link');
         }
     });
-
+    
     // --- DASHBOARD PAGE LOGIC ---
     if (document.body.contains(document.getElementById('task-form'))) {
         const taskForm = document.getElementById('task-form');
@@ -121,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let data = getStudyData();
 
-        // FIX: "Add more..." Category Logic
+        // FIX: Add more category logic
         taskSubjectInput.addEventListener('change', function() {
             if (this.value === 'add-more') {
                 const newCategory = prompt("Enter new category name:");
@@ -298,7 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const month = currentDate.getMonth();
             monthYearDisplay.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
             
-            // India Schedule Fix: Local Date String
             const now = new Date();
             const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 calendarGrid.insertAdjacentHTML('beforeend', `<div class="day ${isStudyDay} ${isEventDay} ${isToday}" data-date="${dateStr}" ${titleAttr}>${i}</div>`);
             }
 
-            // CALENDAR SIZE FIX: Maintain 42 slots
+            // CALENDAR SIZE FIX: 42 slots
             const currentSlotsUsed = firstDayOfMonth + daysInMonth;
             for (let i = currentSlotsUsed; i < 42; i++) {
                 calendarGrid.insertAdjacentHTML('beforeend', '<div class="day other-month"></div>');
