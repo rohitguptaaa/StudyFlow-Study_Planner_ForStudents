@@ -5,7 +5,6 @@ if (currentTheme === 'dark') {
     if (themeToggle) themeToggle.checked = true;
 }
 
-
 let globalCountdown; 
 
 function initializeTimer() {
@@ -77,6 +76,16 @@ initializeTimer();
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- MOBILE MENU LOGIC ---
+    const menuToggle = document.getElementById('mobile-menu');
+    const navList = document.getElementById('nav-list');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('show');
+        });
+    }
+
     // NAVIGATION HIGHLIGHTER
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('nav ul a').forEach(link => {
@@ -87,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // DASHBOARD PAGE LOGIC
     if (document.body.contains(document.getElementById('task-form'))) {
-    
         const taskForm = document.getElementById('task-form');
         const taskTitleInput = document.getElementById('task-title');
         const taskDueDateInput = document.getElementById('task-due-date');
@@ -106,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let data = getStudyData();
 
-  
         const renderTasks = () => {
             taskList.innerHTML = '';
             if (data.tasks.length === 0) {
@@ -120,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 taskList.appendChild(taskItem);
             });
         };
+
         taskForm.addEventListener('submit', (e) => {
             e.preventDefault();
             data.tasks.push({ title: taskTitleInput.value, dueDate: taskDueDateInput.value, subject: taskSubjectInput.value, completed: false });
@@ -127,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTasks();
             taskForm.reset();
         });
+
         taskList.addEventListener('click', (e) => {
             const index = e.target.getAttribute('data-index');
             if (e.target.classList.contains('complete-btn')) data.tasks[index].completed = !data.tasks[index].completed;
@@ -137,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const startTimer = () => {
             let timerState = JSON.parse(localStorage.getItem('timerState')) || {};
-           
             const timeLeftToStart = (timerState.status === 'paused' && timerState.timeLeft) ? timerState.timeLeft : (timerState.sessionLength || 25) * 60;
             const endTime = Date.now() + (timeLeftToStart * 1000);
             localStorage.setItem('timerState', JSON.stringify({
@@ -190,7 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
             timerDisplay.textContent = `${sessionLength < 10 ? '0' : ''}${sessionLength}:00`;
         };
         
-        
         const adjustTimerLength = (type, amount) => {
             let timerState = JSON.parse(localStorage.getItem('timerState')) || { status: 'stopped', sessionLength: 25, breakLength: 5, isSession: true };
             if (timerState.status === 'running') return; 
@@ -199,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 timerState.sessionLength += amount;
                 if (timerState.sessionLength < 1) timerState.sessionLength = 1;
                 sessionLengthDisplay.textContent = timerState.sessionLength;
-                
                 if (timerState.status !== 'paused') {
                     timerDisplay.textContent = `${timerState.sessionLength < 10 ? '0' : ''}${timerState.sessionLength}:00`;
                 }
@@ -219,11 +225,9 @@ document.addEventListener('DOMContentLoaded', () => {
         pauseBtn.addEventListener('click', pauseTimer);
         resetBtn.addEventListener('click', resetTimer);
 
-  
         renderTasks();
         initialTimerSetup();
     }
-
 
     if (document.body.contains(document.getElementById('total-hours'))) {
         const data = getStudyData();
@@ -247,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('studyFlowData');
                 localStorage.removeItem('timerState');
                 alert('All data has been cleared.');
+                location.reload();
             }
         });
         const themeToggle = document.getElementById('theme-toggle');
