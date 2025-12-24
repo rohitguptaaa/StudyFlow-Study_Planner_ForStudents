@@ -90,6 +90,12 @@ main {
     box-sizing: border-box;
 }
 
+/* FIX: ABOUT SECTION JUSTIFIED ALIGNMENT */
+.home-container p {
+    text-align: justify;
+    line-height: 1.6;
+}
+
 .cta-button {
     display: inline-block;
     background-color: #3498db;
@@ -169,7 +175,7 @@ main {
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
 
-/* FIX: Interactive Push and Glow Effect for Buttons */
+
 #start-btn:active, 
 #task-form button:active, 
 .complete-btn:active,
@@ -253,7 +259,7 @@ main {
 .timer-settings {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 15px; /* Reduced gap for mobile */
     margin: 15px 0;
     color: var(--text-color);
 }
@@ -281,7 +287,7 @@ main {
     cursor: pointer;
 }
 
-/* FIX: FIXED ARROWS AND CENTERING */
+
 .calendar-header {
     display: flex;
     justify-content: center;
@@ -291,11 +297,10 @@ main {
 }
 
 .calendar-header h3 {
-    /* Fixed width prevents arrows from moving regardless of text length */
-    width: 150px; 
+    width: 160px; 
     text-align: center;
     margin: 0;
-    flex: 0 0 150px; 
+    flex: 0 0 160px; 
     font-size: 1.1em;
 }
 
@@ -313,15 +318,17 @@ main {
     margin-left: 10px;
 }
 
+/* FIX: CALENDAR GRID SCALING FOR MOBILE */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto repeat(6, 1fr); 
     gap: 5px;
     background-color: var(--card-color);
-    padding: 15px;
+    padding: 10px;
     border-radius: 8px;
-    min-height: 400px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .day-name, .day {
@@ -331,11 +338,16 @@ main {
 
 .day-name {
     font-weight: bold;
+    font-size: 0.8em; /* Slightly smaller for mobile */
 }
 
 .day {
     border-radius: 5px;
     cursor: pointer;
+    aspect-ratio: 1/1; /* Keeps circles perfect on mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .day.other-month {
@@ -443,6 +455,7 @@ footer {
     border-top: 1px solid var(--border-color);
 }
 
+/* FIX: RESPONSIVE MENU OVERLAY SYSTEM */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -467,15 +480,21 @@ footer {
         left: 0;
         width: 100%;
         background-color: var(--header-color);
-        padding: 20px 0;
+        padding: 20px;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         z-index: 1001;
+        box-sizing: border-box;
     }
     
     nav ul.show { display: flex; }
 
     .stats-container {
         flex-direction: column;
+    }
+
+    .timer-settings {
+        flex-wrap: wrap; /* Prevents timer buttons from going off-screen */
+        gap: 10px;
     }
 
     .task-item {
