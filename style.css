@@ -175,7 +175,7 @@ main {
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
 
-/* Interactive Push and Glow Effect for Buttons */
+/* FIX: Interactive Push and Glow Effect for Buttons */
 #start-btn:active, 
 #task-form button:active, 
 .complete-btn:active,
@@ -287,10 +287,10 @@ main {
     cursor: pointer;
 }
 
-/* REVERTED: CALENDAR HEADER (FLUID POSITION) */
+/* REVERTED CALENDAR HEADER: BACK TO ORIGINAL FLUID STATE */
 .calendar-header {
     display: flex;
-    justify-content: space-between; /* Restored original spacing */
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -310,15 +310,17 @@ main {
     cursor: pointer;
 }
 
+/* FIX: CALENDAR GRID SCALING FOR MOBILE */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto repeat(6, 1fr); 
     gap: 5px;
     background-color: var(--card-color);
-    padding: 15px;
+    padding: 10px;
     border-radius: 8px;
-    min-height: 400px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .day-name, .day {
@@ -328,11 +330,16 @@ main {
 
 .day-name {
     font-weight: bold;
+    font-size: 0.8em;
 }
 
 .day {
     border-radius: 5px;
     cursor: pointer;
+    aspect-ratio: 1/1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .day.other-month {
