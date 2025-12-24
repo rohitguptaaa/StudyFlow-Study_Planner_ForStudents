@@ -7,24 +7,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <header>
-    <nav>
-        <a href="index.html" class="logo">StudyFlow</a>
-        <div class="menu-toggle" id="mobile-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul id="nav-list">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="progress.html">Progress</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="settings.html">Settings</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">StudyFlow</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <main class="dashboard-container">
     
@@ -56,22 +56,23 @@
         </div>
         
         <form id="task-form">
-    <input type="text" id="task-title" placeholder="Enter task title..." required>
-    
-    <select id="task-subject" required>
-        <option value="general">General</option>
-        <option value="programming">Programming</option>
-        <option value="math">Mathematics</option>
-        <option value="add-more">Add more...</option>
-    </select>
-    
-    <button type="submit" id="add-task-btn">Add Task</button>
-</form>
+            <input type="text" id="task-title" placeholder="Enter task title..." required>
+            
+            <input type="date" id="task-due-date" required title="Choose a due date">
+            
+            <select id="task-subject" required>
+                <option value="general">General</option>
+                <option value="programming">Programming</option>
+                <option value="math">Mathematics</option>
+                <option value="add-more">Add more....</option>
+            </select>
+            
+            <button type="submit" id="add-task-btn">Add Task</button>
+        </form>
         
         <h3>Your Tasks</h3>
         <div id="task-list">
-        
-        </div>
+            </div>
 
     </main>
     
@@ -82,6 +83,3 @@
     <script src="app.js"></script>
 </body>
 </html>
-
-
-
