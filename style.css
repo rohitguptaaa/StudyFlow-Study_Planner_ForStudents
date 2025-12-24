@@ -169,6 +169,7 @@ main {
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
 
+/* FIX: Interactive Push and Glow Effect for Buttons */
 #start-btn:active, 
 #task-form button:active, 
 .complete-btn:active,
@@ -285,14 +286,16 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Controls space between buttons and text */
+    gap: 0; /* Removing gap to use fixed widths for alignment */
     margin-bottom: 20px;
+    position: relative;
 }
 
 .calendar-header h3 {
-    min-width: 200px; /* FIXED WIDTH: Prevents arrows from moving */
+    width: 220px; /* FIXED WIDTH: Enough space for "September 2025" */
     text-align: center;
-    margin: 0;
+    margin: 0 10px;
+    flex-shrink: 0; /* Prevents text area from shrinking */
 }
 
 .calendar-header button {
@@ -303,6 +306,11 @@ main {
     border-radius: 5px;
     cursor: pointer;
     flex-shrink: 0; /* Prevents buttons from squishing */
+}
+
+/* Ensures "Today" button doesn't push the centered elements off-balance */
+#today-btn {
+    margin-left: 10px;
 }
 
 .calendar-grid {
@@ -485,7 +493,7 @@ footer {
 @media (max-width: 665px) {
     .home-container, .dashboard-container {
         width: 95%;
-        margin: 20px auto;
+        margin: 10px auto;
         padding: 15px;
     }
 }
