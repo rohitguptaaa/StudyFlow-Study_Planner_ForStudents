@@ -281,36 +281,39 @@ main {
     cursor: pointer;
 }
 
-/* MODIFIED SECTION FOR FIXED ARROWS */
+/* Calendar Header */
 .calendar-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0; /* Removing gap to use fixed widths for alignment */
+    /* Reduced Gap*/
+    gap: 5px; 
     margin-bottom: 20px;
     position: relative;
 }
 
 .calendar-header h3 {
-    width: 220px; /* FIXED WIDTH: Enough space for "September 2025" */
+    /* Reduced from 220px/200px to 160px to decrease the empty space */
+    width: 160px; 
     text-align: center;
-    margin: 0 10px;
-    flex-shrink: 0; /* Prevents text area from shrinking */
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 1.1em;
 }
 
 .calendar-header button {
     background: #3498db;
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    flex-shrink: 0; /* Prevents buttons from squishing */
+    flex-shrink: 0;
+    transition: all 0.2s ease;
 }
 
-/* Ensures "Today" button doesn't push the centered elements off-balance */
 #today-btn {
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 .calendar-grid {
