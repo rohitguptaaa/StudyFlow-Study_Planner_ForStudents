@@ -281,23 +281,23 @@ main {
     cursor: pointer;
 }
 
-/* Calendar Header */
+/* FIX: LOCKED ARROW CALENDAR HEADER */
 .calendar-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Reduced Gap*/
-    gap: 5px; 
     margin-bottom: 20px;
-    position: relative;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .calendar-header h3 {
-    /* Reduced from 220px/200px to 160px to decrease the empty space */
+    /* Fixed width prevents arrows from moving regardless of text length */
     width: 160px; 
     text-align: center;
     margin: 0;
-    flex-shrink: 0;
+    flex: 0 0 160px; 
     font-size: 1.1em;
 }
 
@@ -308,12 +308,11 @@ main {
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
+    flex: 0 0 auto;
 }
 
 #today-btn {
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .calendar-grid {
@@ -496,7 +495,7 @@ footer {
 @media (max-width: 665px) {
     .home-container, .dashboard-container {
         width: 95%;
-        margin: 10px auto;
+        margin: 20px auto;
         padding: 15px;
     }
 }
