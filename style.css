@@ -281,23 +281,21 @@ main {
     cursor: pointer;
 }
 
-/* FIX: LOCKED ARROW CALENDAR HEADER */
+/* FIX: FIXED ARROWS AND CENTERING */
 .calendar-header {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
 }
 
 .calendar-header h3 {
     /* Fixed width prevents arrows from moving regardless of text length */
-    width: 160px; 
+    width: 150px; 
     text-align: center;
     margin: 0;
-    flex: 0 0 160px; 
+    flex: 0 0 150px; 
     font-size: 1.1em;
 }
 
@@ -495,7 +493,7 @@ footer {
 @media (max-width: 665px) {
     .home-container, .dashboard-container {
         width: 95%;
-        margin: 20px auto;
+        margin: 10px auto;
         padding: 15px;
     }
 }
