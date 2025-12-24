@@ -26,7 +26,6 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
-    /* FIX: Sticky Footer Layout */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -36,6 +35,9 @@ header {
     background-color: var(--header-color);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 0 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 nav {
@@ -76,14 +78,16 @@ nav a.active-link {
 }
 
 main {
-    flex: 1; /* Allows content to expand and push footer down */
+    flex: 1;
 }
 
 .home-container, .dashboard-container {
     max-width: 900px;
+    width: 95%; /* Responsive width */
     margin: 40px auto;
     padding: 20px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .cta-button {
@@ -97,41 +101,44 @@ main {
     margin-top: 20px;
 }
 
+/* FIX: Box Alignment - Elements will be same width and aligned */
 #task-form {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 15px;
     margin-bottom: 30px;
-    justify-content: center;
-    flex-wrap: wrap;
+    align-items: stretch;
 }
 
-#task-form input, #task-form select {
-    padding: 10px;
+#task-form input, #task-form select, #task-form button {
+    padding: 12px;
     border: 1px solid var(--border-color);
     background-color: var(--card-color);
     color: var(--text-color);
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    height: 48px; /* Unified height */
 }
 
 #task-form button {
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1em;
     background-color: #2ecc71;
     color: white;
     border: none;
     cursor: pointer;
+    font-weight: bold;
 }
 
 #task-list {
     text-align: left;
 }
 
+/* FIX: Task Button Size Consistency */
 .task-item {
     background-color: var(--card-color);
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
@@ -144,21 +151,25 @@ main {
     color: #aaa;
 }
 
+.task-item .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 110px; /* Forces buttons to same width */
+}
+
 .task-item .actions button {
-    margin-left: 10px;
+    margin: 0;
     border: none;
-    padding: 8px 12px;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%; /* Uniform size */
+    font-size: 0.85em;
 }
 
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
-
-#clear-data-btn, .actions .delete-btn {
-    background-color: #e74c3c !important;
-    color: white !important;
-}
 
 .stats-container {
     display: flex;
@@ -187,6 +198,12 @@ main {
     background: var(--card-color);
     padding: 20px;
     border-radius: 8px;
+}
+
+/* FIX: Red Clear Button */
+.delete-btn, #clear-data-btn {
+    background-color: #e74c3c !important;
+    color: white !important;
 }
 
 .timer-container {
@@ -264,36 +281,29 @@ main {
     cursor: pointer;
 }
 
-/* FIX: Calendar Stability (42 slots/6 rows) */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    /* Forces 6 rows to prevent jumping */
-    grid-template-rows: auto repeat(6, 50px); 
+    grid-template-rows: auto repeat(6, 1fr); 
     gap: 5px;
     background-color: var(--card-color);
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
-    min-height: 400px; 
+    min-height: 400px;
 }
 
 .day-name, .day {
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 10px;
+}
+
+.day-name {
+    font-weight: bold;
 }
 
 .day {
     border-radius: 5px;
     cursor: pointer;
-}
-
-.day.today {
-    border: 2px solid #3498db;
-    color: #3498db;
-    font-weight: bold;
-    border-radius: 50%;
 }
 
 .day.other-month {
@@ -304,6 +314,13 @@ main {
     background-color: #2ecc71;
     color: white;
     font-weight: bold;
+}
+
+.day.today {
+    border: 2px solid #3498db;
+    border-radius: 50%;
+    font-weight: bold;
+    color: #3498db;
 }
 
 .event-day {
@@ -394,7 +411,7 @@ footer {
     border-top: 1px solid var(--border-color);
 }
 
-/* --- RESPONSIVE HAMBURGER & MOBILE FIXES --- */
+/* FIX: Responsive Menu Logic */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -415,7 +432,7 @@ footer {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 60px;
+        top: 100%;
         left: 0;
         width: 100%;
         background-color: var(--header-color);
@@ -426,19 +443,26 @@ footer {
     
     nav ul.show { display: flex; }
 
-    .stats-container, #task-form {
+    .stats-container {
         flex-direction: column;
     }
 
-    #task-form input, #task-form select, #task-form button {
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .task-item .actions {
         width: 100%;
+        flex-direction: row;
     }
 }
 
 @media (max-width: 665px) {
     .home-container, .dashboard-container {
         width: 95%;
-        margin: 20px auto;
-        padding: 10px;
+        margin: 10px auto;
+        padding: 15px;
     }
 }
