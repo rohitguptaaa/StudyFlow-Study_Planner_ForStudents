@@ -39,7 +39,6 @@ function initializeTimer() {
 function handleTimerCompletion(timerState) {
     const data = getStudyData();
     
-    // India Schedule Fix: Local Date String
     const now = new Date();
     const today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
@@ -69,7 +68,6 @@ function handleTimerCompletion(timerState) {
     initializeTimer();
 }
 
-// --- YOUR ORIGINAL DATA LOGIC ---
 const getStudyData = () => {
     const defaultData = { tasks: [], studySessions: [], calendarEvents: {}, stats: { totalMinutes: 0, streak: 0, lastSessionDate: null } };
     const data = JSON.parse(localStorage.getItem('studyFlowData'));
@@ -85,7 +83,6 @@ initializeTimer();
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // FIX: Mobile Menu toggle logic
     const menuToggle = document.getElementById('mobile-menu');
     const navList = document.querySelector('nav ul');
     if (menuToggle && navList) {
@@ -94,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // YOUR ORIGINAL NAVIGATION HIGHLIGHTER
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('nav ul a').forEach(link => {
         if (link.getAttribute('href') === currentPage) {
@@ -102,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // --- DASHBOARD PAGE LOGIC ---
     if (document.body.contains(document.getElementById('task-form'))) {
         const taskForm = document.getElementById('task-form');
         const taskTitleInput = document.getElementById('task-title');
@@ -122,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let data = getStudyData();
 
-        // FIX: Add more category logic
         taskSubjectInput.addEventListener('change', function() {
             if (this.value === 'add-more') {
                 const newCategory = prompt("Enter new category name:");
@@ -253,7 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initialTimerSetup();
     }
 
-    // --- PROGRESS LOGIC ---
     if (document.body.contains(document.getElementById('total-hours'))) {
         const data = getStudyData();
         const totalHours = (data.stats.totalMinutes / 60).toFixed(1);
@@ -270,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- SETTINGS LOGIC ---
     if (document.body.contains(document.getElementById('clear-data-btn'))) {
         document.getElementById('clear-data-btn').addEventListener('click', () => {
             if (confirm('Are you sure you want to delete all your data?')) {
@@ -285,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CALENDAR LOGIC WITH FIXES ---
     if (document.body.contains(document.querySelector('.calendar-grid'))) {
         let data = getStudyData();
         const studyDays = new Set(data.studySessions.map(session => session.date));
@@ -321,7 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 calendarGrid.insertAdjacentHTML('beforeend', `<div class="day ${isStudyDay} ${isEventDay} ${isToday}" data-date="${dateStr}" ${titleAttr}>${i}</div>`);
             }
 
-            // CALENDAR SIZE FIX: 42 slots
             const currentSlotsUsed = firstDayOfMonth + daysInMonth;
             for (let i = currentSlotsUsed; i < 42; i++) {
                 calendarGrid.insertAdjacentHTML('beforeend', '<div class="day other-month"></div>');
