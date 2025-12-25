@@ -287,22 +287,23 @@ main {
     cursor: pointer;
 }
 
-/* FIX: RESTORED FIXED CALENDAR HEADER */
+/* Update ONLY this section in your style.css */
+
 .calendar-header {
     display: flex;
-    justify-content: center; /* Forces grouping to center */
+    justify-content: center; /* Centers the group on the screen */
     align-items: center;
+    /* REDUCED: Lower this number to bring buttons closer to the text */
+    gap: 10px; 
     margin-bottom: 20px;
-    width: 100%;
 }
 
 .calendar-header h3 {
-    /* Set a tight fixed width to keep arrows close but locked */
-    width: 180px; 
+    /* REDUCED: Changed from 160px/200px to 140px to pull buttons inward */
+    min-width: 140px; 
     text-align: center;
     margin: 0;
-    flex: 0 0 180px; /* Forces width to remain 180px always */
-    font-size: 1.1em;
+    flex-shrink: 0;
 }
 
 .calendar-header button {
@@ -312,11 +313,12 @@ main {
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    flex: 0 0 auto; /* Keeps buttons from stretching */
+    flex-shrink: 0;
 }
 
+/* Ensure the Today button has a consistent small gap */
 #today-btn {
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 /* FIX: CALENDAR GRID SCALING FOR MOBILE */
