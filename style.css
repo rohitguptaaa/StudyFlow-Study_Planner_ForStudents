@@ -175,7 +175,7 @@ main {
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
 
-/* FIX: Interactive Push and Glow Effect for Buttons */
+
 #start-btn:active, 
 #task-form button:active, 
 .complete-btn:active,
@@ -287,17 +287,21 @@ main {
     cursor: pointer;
 }
 
-/* REVERTED CALENDAR HEADER: BACK TO ORIGINAL FLUID STATE */
+/* FIX: RESTORED FIXED CALENDAR HEADER */
 .calendar-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Forces grouping to center */
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .calendar-header h3 {
+    /* Set a tight fixed width to keep arrows close but locked */
+    width: 180px; 
     text-align: center;
     margin: 0;
+    flex: 0 0 180px; /* Forces width to remain 180px always */
     font-size: 1.1em;
 }
 
@@ -305,9 +309,14 @@ main {
     background: #3498db;
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
+    flex: 0 0 auto; /* Keeps buttons from stretching */
+}
+
+#today-btn {
+    margin-left: 10px;
 }
 
 /* FIX: CALENDAR GRID SCALING FOR MOBILE */
