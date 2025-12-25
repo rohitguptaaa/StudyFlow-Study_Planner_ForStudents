@@ -115,6 +115,7 @@ main {
     align-items: stretch;
 }
 
+/* FIX: BOX-SIZING ADDED TO PREVENT OVERFLOW ON MOBILE (DATE INPUT FIX) */
 #task-form input, #task-form select, #task-form button {
     padding: 12px;
     border: 1px solid var(--border-color);
@@ -123,7 +124,7 @@ main {
     border-radius: 8px;
     font-size: 1em;
     width: 100%;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Crucial to keep date box inside the screen */
     height: 48px; 
 }
 
@@ -174,7 +175,6 @@ main {
 
 .actions .complete-btn { background-color: #27ae60; color: white; }
 .actions .delete-btn { background-color: #e74c3c; color: white; }
-
 
 #start-btn:active, 
 #task-form button:active, 
@@ -259,7 +259,7 @@ main {
 .timer-settings {
     display: flex;
     justify-content: center;
-    gap: 15px; 
+    gap: 15px;
     margin: 15px 0;
     color: var(--text-color);
 }
@@ -287,20 +287,17 @@ main {
     cursor: pointer;
 }
 
-/* Update ONLY this section in your style.css */
-
+/* FIX: TIGHTENED CALENDAR HEADER SPACING FOR MOBILE */
 .calendar-header {
     display: flex !important;
     justify-content: center !important; 
     align-items: center !important;
-    /* This forces the buttons to stay tight against the text */
     gap: 8px !important; 
     margin-bottom: 20px !important;
     width: 100% !important;
 }
 
 .calendar-header h3 {
-    /* Tight minimal width to pull arrows inward */
     min-width: 120px !important; 
     max-width: 130px !important;
     text-align: center !important;
@@ -323,17 +320,20 @@ main {
     margin-left: 2px !important;
     width: auto !important;
 }
-/* FIX: CALENDAR GRID SCALING FOR MOBILE */
+
+/* FIX: CALENDAR GRID SCALING FOR ALL DEVICES */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto repeat(6, 1fr); 
     gap: 5px;
     background-color: var(--card-color);
-    padding: 10px;
+    padding: 10px; /* Reduced from 15px to fit mobile screens better */
     border-radius: 8px;
     width: 100%;
     box-sizing: border-box;
+    max-width: 600px; /* Limits desktop size so it's not "too big" */
+    margin: 0 auto; /* Centers the calendar on desktop */
 }
 
 .day-name, .day {
@@ -343,16 +343,17 @@ main {
 
 .day-name {
     font-weight: bold;
-    font-size: 0.8em;
+    font-size: 0.8em; /* Slightly smaller to ensure fit */
 }
 
 .day {
     border-radius: 5px;
     cursor: pointer;
-    aspect-ratio: 1/1; 
+    aspect-ratio: 1/1; /* Keeps cells square */
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.9em;
 }
 
 .day.other-month {
@@ -460,7 +461,6 @@ footer {
     border-top: 1px solid var(--border-color);
 }
 
-/* FIX: RESPONSIVE MENU OVERLAY SYSTEM */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -498,7 +498,7 @@ footer {
     }
 
     .timer-settings {
-        flex-wrap: wrap; 
+        flex-wrap: wrap;
         gap: 10px;
     }
 
@@ -521,5 +521,3 @@ footer {
         padding: 15px;
     }
 }
-
-
