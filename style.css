@@ -90,7 +90,6 @@ main {
     box-sizing: border-box;
 }
 
-/* FIX: ABOUT SECTION JUSTIFIED ALIGNMENT */
 .home-container p {
     text-align: justify;
     line-height: 1.6;
@@ -124,7 +123,7 @@ main {
     border-radius: 8px;
     font-size: 1em;
     width: 100%;
-    box-sizing: border-box; /* Crucial to keep date box inside the screen */
+    box-sizing: border-box; /* FIX: Keeps date box inside the screen */
     height: 48px; 
 }
 
@@ -259,7 +258,7 @@ main {
 .timer-settings {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 15px; 
     margin: 15px 0;
     color: var(--text-color);
 }
@@ -287,7 +286,7 @@ main {
     cursor: pointer;
 }
 
-/* FIX: TIGHTENED CALENDAR HEADER SPACING FOR MOBILE */
+/* FIX: LOCKED ARROW CALENDAR HEADER */
 .calendar-header {
     display: flex !important;
     justify-content: center !important; 
@@ -298,19 +297,22 @@ main {
 }
 
 .calendar-header h3 {
-    min-width: 120px !important; 
-    max-width: 130px !important;
+    /* Set a strict width to prevent text from pushing arrows out of place */
+    min-width: 160px !important; 
+    max-width: 160px !important;
     text-align: center !important;
     margin: 0 !important;
-    flex: 0 0 auto !important; 
+    flex: 0 0 160px !important; 
     font-size: 1.1em !important;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .calendar-header button {
     background: #3498db !important;
     color: white !important;
     border: none !important;
-    padding: 6px 10px !important; 
+    padding: 8px 12px !important; 
     border-radius: 5px !important;
     cursor: pointer !important;
     flex: 0 0 auto !important;
@@ -323,17 +325,17 @@ main {
 
 /* FIX: CALENDAR GRID SCALING FOR ALL DEVICES */
 .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: auto repeat(6, 1fr); 
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    grid-template-rows: auto repeat(6, 1fr) !important; 
     gap: 5px;
     background-color: var(--card-color);
-    padding: 10px; /* Reduced from 15px to fit mobile screens better */
+    padding: 10px !important;
     border-radius: 8px;
     width: 100%;
     box-sizing: border-box;
-    max-width: 600px; /* Limits desktop size so it's not "too big" */
-    margin: 0 auto; /* Centers the calendar on desktop */
+    max-width: 600px !important; /* Limits size on desktop */
+    margin: 0 auto !important;
 }
 
 .day-name, .day {
@@ -343,13 +345,13 @@ main {
 
 .day-name {
     font-weight: bold;
-    font-size: 0.8em; /* Slightly smaller to ensure fit */
+    font-size: 0.8em;
 }
 
 .day {
     border-radius: 5px;
     cursor: pointer;
-    aspect-ratio: 1/1; /* Keeps cells square */
+    aspect-ratio: 1/1; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -366,11 +368,13 @@ main {
     font-weight: bold;
 }
 
+/* FIX: TODAY CIRCLE HIGHLIGHT (BOUNDARY ONLY, NO FILL) */
 .day.today {
-    border: 2px solid #3498db;
+    border: 3px solid #3498db !important; /* Bolded boundary */
+    background-color: transparent !important; /* No inside fill */
     border-radius: 50%;
-    font-weight: bold;
-    color: #3498db;
+    font-weight: 900 !important; /* Bolded number */
+    color: #3498db !important;
 }
 
 .event-day {
