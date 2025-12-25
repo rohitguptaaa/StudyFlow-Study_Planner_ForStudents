@@ -300,12 +300,12 @@ main {
 }
 
 .calendar-header h3 {
-    /* REDUCED: Minimal width to pull arrows inward */
+    /* Tight minimal width to pull arrows inward */
     min-width: 120px !important; 
     max-width: 130px !important;
     text-align: center !important;
     margin: 0 !important;
-    flex: 0 0 auto !important; /* Prevents the box from growing */
+    flex: 0 0 auto !important; 
     font-size: 1.1em !important;
 }
 
@@ -313,14 +313,13 @@ main {
     background: #3498db !important;
     color: white !important;
     border: none !important;
-    padding: 6px 10px !important; /* Smaller padding for a tighter look */
+    padding: 6px 10px !important; 
     border-radius: 5px !important;
     cursor: pointer !important;
     flex: 0 0 auto !important;
 }
 
 #today-btn {
-    /* Keeps Today button slightly separated but close */
     margin-left: 2px !important;
     width: auto !important;
 }
@@ -522,4 +521,5 @@ footer {
         padding: 15px;
     }
 }
+
 
