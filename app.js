@@ -217,13 +217,23 @@ document.addEventListener('DOMContentLoaded', () => {
             timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
         };
         
-        const resetTimer = () => {
-            clearInterval(globalCountdown);
-            const timerState = JSON.parse(localStorage.getItem('timerState')) || {};
-            const sessionLength = timerState.sessionLength || 25; 
-            localStorage.removeItem('timerState');
-            timerDisplay.textContent = `${sessionLength < 10 ? '0' : ''}${sessionLength}:00`;
-        };
+       const resetTimer = () => {
+    clearInterval(globalCountdown);
+
+    // Read current session value from UI (always correct)
+    const sessionLength = parseInt(sessionLengthDisplay.textContent, 10);
+
+    // Preserve session & break settings
+    localStorage.setItem('timerState', JSON.stringify({
+        status: 'stopped',
+        sessionLength: sessionLength,
+        breakLength: parseInt(breakLengthDisplay.textContent, 10),
+        isSession: true
+    }));
+
+    timerDisplay.textContent = `${sessionLength < 10 ? '0' : ''}${sessionLength}:00`;
+};
+
         
         const adjustTimerLength = (type, amount) => {
             let timerState = JSON.parse(localStorage.getItem('timerState')) || { status: 'stopped', sessionLength: 25, breakLength: 5, isSession: true };
@@ -366,3 +376,4 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCalendar();
     }
 });
+
