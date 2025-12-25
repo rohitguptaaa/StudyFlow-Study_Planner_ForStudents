@@ -290,37 +290,40 @@ main {
 /* Update ONLY this section in your style.css */
 
 .calendar-header {
-    display: flex;
-    justify-content: center; /* Centers the group on the screen */
-    align-items: center;
-    /* REDUCED: Lower this number to bring buttons closer to the text */
-    gap: 10px; 
-    margin-bottom: 20px;
+    display: flex !important;
+    justify-content: center !important; 
+    align-items: center !important;
+    /* This forces the buttons to stay tight against the text */
+    gap: 8px !important; 
+    margin-bottom: 20px !important;
+    width: 100% !important;
 }
 
 .calendar-header h3 {
-    /* REDUCED: Changed from 160px/200px to 140px to pull buttons inward */
-    min-width: 140px; 
-    text-align: center;
-    margin: 0;
-    flex-shrink: 0;
+    /* REDUCED: Minimal width to pull arrows inward */
+    min-width: 120px !important; 
+    max-width: 130px !important;
+    text-align: center !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important; /* Prevents the box from growing */
+    font-size: 1.1em !important;
 }
 
 .calendar-header button {
-    background: #3498db;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    flex-shrink: 0;
+    background: #3498db !important;
+    color: white !important;
+    border: none !important;
+    padding: 6px 10px !important; /* Smaller padding for a tighter look */
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    flex: 0 0 auto !important;
 }
 
-/* Ensure the Today button has a consistent small gap */
 #today-btn {
-    margin-left: 5px;
+    /* Keeps Today button slightly separated but close */
+    margin-left: 2px !important;
+    width: auto !important;
 }
-
 /* FIX: CALENDAR GRID SCALING FOR MOBILE */
 .calendar-grid {
     display: grid;
@@ -519,3 +522,4 @@ footer {
         padding: 15px;
     }
 }
+
