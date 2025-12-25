@@ -43,6 +43,14 @@ https://rohitguptaaa.github.io/StudyFlow-Study_Planner_ForStudents/
 *Output screenshots:*
 
 
+<img width="1769" height="897" alt="Screenshot 2025-12-26 021241" src="https://github.com/user-attachments/assets/8dc33eba-5d3d-4dc9-8387-4aeabed54f72" />
+
+
+
+<img width="1755" height="911" alt="Screenshot 2025-12-26 021108" src="https://github.com/user-attachments/assets/00c22eff-96db-4c76-811c-9d2eae6c703d" />
+
+
+<img width="1748" height="898" alt="Screenshot 2025-12-26 021311" src="https://github.com/user-attachments/assets/a787f69c-21ca-4424-8472-2c6a816a9842" />
 
 
 ---
