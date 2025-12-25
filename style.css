@@ -553,10 +553,11 @@ footer {
 
 
 @media (min-width: 769px) {
-    .home-container p {
-        text-align: center !important;
+    .home-hero p {
+        text-align: center;
         margin-left: auto;
         margin-right: auto;
         max-width: 700px;
     }
 }
+
